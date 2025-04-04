@@ -44,24 +44,18 @@ function drawComputerBg() {
         
         ctx.font = "15px Arial";
         ctx.fillText(`Money: ${money}$`, 330, 260);
-        ctx.fillText(`Weed quantity: ${quantity}g`, 810, 260)
-
-
+        ctx.fillText(`Weed quantity: ${quantity}g`, 810, 260);
         
         ctx.strokeStyle = "white";
         ctx.moveTo(275, 275);
         ctx.lineTo(885, 275);
         ctx.stroke();
 
-        const clicker = ctx.roundRect(285, 300, 285, 100, 10);
-        // window.addEventListener('click', function (revenue, multiplier) {
-
-        // })
-        // for (let i = 0; i < 3; i++) {
-        //     ctx.roundRect(285, 300 + i * 120, 285, 100, 10);
-        //     ctx.fill();
-        // };
-
+        for (let i = 0; i < 3; i++) {
+            ctx.roundRect(285, 300 + i * 120, 285, 100, 10);
+            ctx.fill();
+        };
+        
         for (let i = 0; i < 3; i++) {
             ctx.roundRect(590, 300 + i * 120, 285, 100, 10);
             ctx.fill();
@@ -70,6 +64,18 @@ function drawComputerBg() {
         ctx.moveTo(580, 275);
         ctx.lineTo(580, 674);
         ctx.stroke();
+
+        const lemonHaze = new Image();
+        lemonHaze.src = "plant.webp"
+        lemonHaze.onload = function() {
+            let imgX = 295
+            let imgY = 310
+            ctx.drawImage(lemonHaze, imgX, imgY, 80, 80)
+        }
+
+        ctx.fillStyle = 'black'
+        ctx.fillText("Lemon Haze", 450, 320)
+
     };
 
 }
