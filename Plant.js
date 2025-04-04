@@ -1,9 +1,10 @@
 class Plant {
-    constructor(id, type) {
-        this.id = id;
-        this.type = type;
-        this.status = 0;
-        this.water = 100;
+    constructor(type) {
+        this.type = type[0];
+        this.status = 100;
+        this.water = 50;
+        this.minGrams = type[1];
+        this.maxGrams = type[2];
     }
 }
 
