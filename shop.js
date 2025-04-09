@@ -1,9 +1,10 @@
 class Shop {
-    constructor() {
-        this.money = 500
-        this.quantity = 0
-        this.multiplier = 1;
+    constructor(money = 500, quantity = 0, multiplier = 1, plantCounter = 0) {
+        this.money = money;
+        this.quantity = quantity;
+        this.multiplier = multiplier;
         this.revenue = 1 * this.multiplier;
+        this.plantCounter = plantCounter;
     }
 
     Harvest(plant) {
@@ -14,4 +15,4 @@ class Shop {
     }
 }
 
-export default Shop
+export default Shop;

@@ -7,20 +7,12 @@ const ctx = canvas.getContext("2d");
 const width = canvas.width;
 const height = canvas.height;
 
-let money = new Shop().money
-let quantity = new Shop().quantity
-let revenue = new Shop().revenue
-let multiplier = new Shop().multiplier
+const shop = new Shop()
 
-function drawBg() {
-    const img = new Image();
-    img.src = "test.webp";
-    img.onload = function () {
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-        Computer();
-    };
-}
+let money = shop.money
+let quantity = shop.quantity
+let revenue = shop.revenue
+let multiplier = shop.multiplier
 
 function drawComputerBg() {
     const img = new Image();
@@ -66,22 +58,87 @@ function drawComputerBg() {
         ctx.stroke();
 
         const lemonHaze = new Image();
-        lemonHaze.src = "plant.webp"
+        lemonHaze.src = "images/lemonhaze.webp"
         lemonHaze.onload = function() {
             let imgX = 295
             let imgY = 310
             ctx.drawImage(lemonHaze, imgX, imgY, 80, 80)
+            ctx.fillStyle = 'black'
+            ctx.fillText("Lemon Haze", 450, 320)
         }
 
-        ctx.fillStyle = 'black'
-        ctx.fillText("Lemon Haze", 450, 320)
+        const albanSzamar = new Image();
+        albanSzamar.src = "images/albanszamar.png"
+        albanSzamar.onload = function() {
+            let imgX = 295
+            let imgY = 430
+            ctx.drawImage(albanSzamar, imgX, imgY, 80, 80)
+            ctx.fillStyle = 'black'
+            ctx.fillText("Albán Szamár", 450, 440)
+        }
 
+        const party_in_the_parlament = new Image();
+        party_in_the_parlament.src = "images/party_in_the_parlament.png"
+        party_in_the_parlament.onload = function() {
+            let imgX = 295
+            let imgY = 550
+            ctx.drawImage(party_in_the_parlament, imgX, imgY, 80, 80)
+            ctx.fillStyle = 'black'
+            ctx.fillText("Party in the Parlament", 450, 560)
+        }
+
+        const strain_of_death = new Image();
+        strain_of_death.src = "images/strain_of_death.png"
+        strain_of_death.onload = function() {
+            let imgX = 585
+            let imgY = 310
+            ctx.drawImage(strain_of_death, imgX, imgY, 80, 80)
+            ctx.fillStyle = 'black'
+            ctx.fillText("Strain of Death", 735, 320)
+        }
+
+        const ghostHaze = new Image();
+        ghostHaze.src = "images/ghosthaze.png"
+        ghostHaze.onload = function() {
+            let imgX = 585
+            let imgY = 430
+            ctx.drawImage(ghostHaze, imgX, imgY, 80, 80)
+            ctx.fillStyle = 'black'
+            ctx.fillText("Ghost Haze", 735, 440)
+        }
+
+        const octopussy = new Image();
+        octopussy.src = "images/octopu$$y.png"
+        octopussy.onload = function() {
+            let imgX = 585
+            let imgY = 550
+            ctx.drawImage(octopussy, imgX, imgY, 80, 80)
+            ctx.fillStyle = 'black'
+            ctx.fillText("Octopu$$y", 735, 560)
+        }
     };
 
+}
+
+function closeMenu() {
+    window.addEventListener('click', function (event) {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+
+        const x = (event.clientX - rect.left) * scaleX;
+        const y = (event.clientY - rect.top) * scaleY;
+
+        // if (x < 245 && x > 245 + 428 && y < 200 && y > 200 + 311) {
+
+        // }
+    })
 }
 
 function Computer() {
     drawComputerBg();
 }
 
-drawBg();
+Computer()
+
+closeMenu()
