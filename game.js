@@ -7,23 +7,24 @@ const ctx = canvas.getContext("2d");
 const width = canvas.width;
 const height = canvas.height;
 
-let plants = [];
-const plantTypes = [
-    ["Lemon Haze", 10, 15],
-    ["Grey Haze", 10, 15],
-    ["Blueberry Haze", 10, 15],
-    ["Alban Haze", 10, 15],
-    ["Strawberry Haze", 10, 15],
-    ["Orange Haze", 10, 15]
-];
-
 const shop = new Shop();
 
+let plants = [];
+const plantTypes = [
+    ["Lemon Haze", 10, 15, "images/lemonhaze.webp"],
+    ["Grey Haze", 10, 15, "images/lemonhaze.webp"],
+    ["Blueberry Haze", 10, 15, "images/lemonhaze.webp"],
+    ["Alban Haze", 10, 15, "images/lemonhaze.webp"],
+    ["Strawberry Haze", 10, 15, "images/lemonhaze.webp"],
+    ["Orange Haze", 10, 15, "images/lemonhaze.webp"]
+];
+
+
 function drawPlants() {
-    const img2 = new Image();
-    img2.src = "plant.webp";
-    img2.onload = function () {
-        for (let index = 0; index < plants.length; index++) {
+    for (let index = 0; index < plants.length; index++) {
+        const img = new Image();
+        img.src = plants[index].image;
+        img.onload = function () {
             if (plants[index].water < 10) {
                 ctx.beginPath();
                 ctx.fillStyle = "lightblue";
@@ -36,7 +37,7 @@ function drawPlants() {
                 ctx.roundRect(318 + index * 60, 230, 10, 10, 150);
                 ctx.fill();
             }
-            ctx.drawImage(img2, 285 + index * 60, 250, 70 + plants[index].status / 20, 70 + plants[index].status / 20);
+            ctx.drawImage(img, 285 + index * 60, 250, 70 + plants[index].status / 20, 70 + plants[index].status / 20);
         }
     };
 }
@@ -62,12 +63,16 @@ window.addEventListener("click", function (event) {
 });
 
 function ToolTip(plant) {
+    if (timeout != null) {
+        clearTimeout(timeout);
+        timeout = null;
+    }
     ctx.clearRect(426, 410, 304, 209);
     ctx.fillStyle = "#013319";
     ctx.fillRect(426, 410, 304, 209);
 
     const img = new Image();
-    img.src = "plant.webp";
+    img.src = plant.image;
     img.onload = function () {
         ctx.drawImage(img, 540, 425, 70, 70);
 
@@ -107,7 +112,7 @@ function ToolTip(plant) {
         });
     };
 
-    setTimeout(() => {
+    timeout = setTimeout(() => {
         ctx.clearRect(426, 410, 304, 209);
     }, 5000);
 }
@@ -124,8 +129,12 @@ setInterval(() => {
             plant.status++;
         }
     });
+
+    localStorage.setItem("plants", JSON.stringify(plants));
+    localStorage.setItem("shop", JSON.stringify(shop));
 }, 2000);
 
+let timeout = null;
 drawPlants();
 buyPlant(plantTypes[Math.floor(Math.random() * plantTypes.length)]);
 buyPlant(plantTypes[Math.floor(Math.random() * plantTypes.length)]);
