@@ -57,6 +57,8 @@ function drawComputerBg() {
         ctx.lineTo(580, 674);
         ctx.stroke();
 
+        ctx.closePath()
+
         const lemonHaze = new Image();
         lemonHaze.src = "images/lemonhaze.webp"
         lemonHaze.onload = function() {
@@ -64,7 +66,10 @@ function drawComputerBg() {
             let imgY = 310
             ctx.drawImage(lemonHaze, imgX, imgY, 80, 80)
             ctx.fillStyle = 'black'
-            ctx.fillText("Lemon Haze", 450, 320)
+            ctx.fillText("Lemon Haze", 460, 320)
+            ctx.fillText("Price: 100$", 460, 345)
+            ctx.fillText("Quantity you get: 15-25g", 460, 370)
+            ctx.fillText("Sell price: 10$/g", 460, 395)
         }
 
         const albanSzamar = new Image();
@@ -74,7 +79,10 @@ function drawComputerBg() {
             let imgY = 430
             ctx.drawImage(albanSzamar, imgX, imgY, 80, 80)
             ctx.fillStyle = 'black'
-            ctx.fillText("Albán Szamár", 450, 440)
+            ctx.fillText("Albán Szamár", 460, 440)
+            ctx.fillText("Price: 500$", 460, 465)
+            ctx.fillText("Quantity you get: 30-40g", 460, 490)
+            ctx.fillText("Sell price: 30$/g", 460, 515)
         }
 
         const party_in_the_parlament = new Image();
@@ -84,7 +92,10 @@ function drawComputerBg() {
             let imgY = 550
             ctx.drawImage(party_in_the_parlament, imgX, imgY, 80, 80)
             ctx.fillStyle = 'black'
-            ctx.fillText("Party in the Parlament", 450, 560)
+            ctx.fillText("Party in the Parlament", 460, 560)
+            ctx.fillText("Price: 2500$", 460, 585)
+            ctx.fillText("Quantity you get: 50-55g", 460, 610)
+            ctx.fillText("Sell price: 50$/g", 460, 635)
         }
 
         const strain_of_death = new Image();
@@ -94,7 +105,10 @@ function drawComputerBg() {
             let imgY = 310
             ctx.drawImage(strain_of_death, imgX, imgY, 80, 80)
             ctx.fillStyle = 'black'
-            ctx.fillText("Strain of Death", 735, 320)
+            ctx.fillText("Strain of Death", 755, 320)
+            ctx.fillText("Price: 10000$", 755, 345)
+            ctx.fillText("Quantity you get: 90-100g", 755, 370)
+            ctx.fillText("Sell price: 150$/g", 755, 395)
         }
 
         const ghostHaze = new Image();
@@ -104,7 +118,10 @@ function drawComputerBg() {
             let imgY = 430
             ctx.drawImage(ghostHaze, imgX, imgY, 80, 80)
             ctx.fillStyle = 'black'
-            ctx.fillText("Ghost Haze", 735, 440)
+            ctx.fillText("Ghost Haze", 755, 440)
+            ctx.fillText("Price: ", 755, 465)
+            ctx.fillText("Quantity you get: ", 755, 490)
+            ctx.fillText("Sell price: ", 755, 515)
         }
 
         const octopussy = new Image();
@@ -114,8 +131,20 @@ function drawComputerBg() {
             let imgY = 550
             ctx.drawImage(octopussy, imgX, imgY, 80, 80)
             ctx.fillStyle = 'black'
-            ctx.fillText("Octopu$$y", 735, 560)
+            ctx.fillText("Octopu$$y", 755, 560)
+            ctx.fillText("Price: ", 755, 585)
+            ctx.fillText("Quantity you get: ", 755, 610)
+            ctx.fillText("Sell price: ", 755, 635)
         }
+        
+        ctx.beginPath()
+        ctx.fillStyle = 'green'
+        ctx.roundRect(500, 648, 160, 20, 5)
+        ctx.fill()
+        
+        ctx.fillStyle = 'white'
+        ctx.fillText("Buy selected products", 580, 663)
+
     };
 
 }
@@ -142,3 +171,5 @@ function Computer() {
 Computer()
 
 closeMenu()
+
+Clear()
