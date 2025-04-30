@@ -119,9 +119,9 @@ function drawComputerBg() {
             ctx.drawImage(ghostHaze, imgX, imgY, 80, 80)
             ctx.fillStyle = 'black'
             ctx.fillText("Ghost Haze", 755, 440)
-            ctx.fillText("Price: ", 755, 465)
-            ctx.fillText("Quantity you get: ", 755, 490)
-            ctx.fillText("Sell price: ", 755, 515)
+            ctx.fillText("Price: 25000$", 755, 465)
+            ctx.fillText("Quantity you get: 120-130g", 755, 490)
+            ctx.fillText("Sell price: 250$/g", 755, 515)
         }
 
         const octopussy = new Image();
@@ -132,24 +132,24 @@ function drawComputerBg() {
             ctx.drawImage(octopussy, imgX, imgY, 80, 80)
             ctx.fillStyle = 'black'
             ctx.fillText("Octopu$$y", 755, 560)
-            ctx.fillText("Price: ", 755, 585)
-            ctx.fillText("Quantity you get: ", 755, 610)
-            ctx.fillText("Sell price: ", 755, 635)
+            ctx.fillText("Price: 30000$", 755, 585)
+            ctx.fillText("Quantity you get: 140-150g", 755, 610)
+            ctx.fillText("Sell price: 400$/g", 755, 635)
         }
         
-        ctx.beginPath()
-        ctx.fillStyle = 'green'
-        ctx.roundRect(500, 648, 160, 20, 5)
-        ctx.fill()
+        // ctx.beginPath()
+        // ctx.fillStyle = 'green'
+        // ctx.roundRect(500, 648, 160, 20, 5)
+        // ctx.fill()
         
-        ctx.fillStyle = 'white'
-        ctx.fillText("Buy selected products", 580, 663)
+        // ctx.fillStyle = 'white'
+        // ctx.fillText("Buy selected products", 580, 663)
 
     };
 
 }
 
-function closeMenu() {
+function buyPlants() {
     window.addEventListener('click', function (event) {
         const rect = canvas.getBoundingClientRect();
         const scaleX = canvas.width / rect.width;
@@ -158,9 +158,31 @@ function closeMenu() {
         const x = (event.clientX - rect.left) * scaleX;
         const y = (event.clientY - rect.top) * scaleY;
 
-        // if (x < 245 && x > 245 + 428 && y < 200 && y > 200 + 311) {
-
-        // }
+        if (x > 285 && x < 570 && y > 300 && y < 400 && money >= 100) {
+            money -= 100
+            console.log('done')
+            drawComputerBg()
+        }
+        else if (x > 285 && x < 570 && y > 420 && y < 520 && money >= 500) {
+            money -= 500
+            drawComputerBg()
+        }
+        else if (x > 285 && x < 570 && y > 540 && y < 640 && money >= 2500) {
+            money -= 2500
+            drawComputerBg()
+        }
+        else if (x > 590 && x < 285 && y > 300 && y < 400 && money >= 10000) {
+            money -= 10000
+            drawComputerBg()
+        }
+        else if (x > 590 && x < 285 && y > 420 && y < 520 && money >= 25000) {
+            money -= 25000
+            drawComputerBg()
+        }
+        else if (x > 590 && x < 285 && y > 540 && y < 640 && money >= 30000) {
+            money -= 30000
+            drawComputerBg()
+        }
     })
 }
 
@@ -170,6 +192,4 @@ function Computer() {
 
 Computer()
 
-closeMenu()
-
-Clear()
+buyPlants()
