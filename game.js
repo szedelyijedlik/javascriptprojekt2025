@@ -285,7 +285,7 @@ function drawComputerBg() {
 
         ctx.closePath()
 
-        const lemonHaze = new Image();
+        const lemonHaze = new Image(); // 0
         lemonHaze.src = "images/lemonhaze.webp"
         lemonHaze.onload = function() {
             let imgX = 295
@@ -298,7 +298,7 @@ function drawComputerBg() {
             ctx.fillText("Sell price: 10$/g", 460, 395)
         }
 
-        const albanSzamar = new Image();
+        const albanSzamar = new Image(); //2
         albanSzamar.src = "images/albanszamar.png"
         albanSzamar.onload = function() {
             let imgX = 295
@@ -311,7 +311,7 @@ function drawComputerBg() {
             ctx.fillText("Sell price: 30$/g", 460, 515)
         }
 
-        const party_in_the_parlament = new Image();
+        const party_in_the_parlament = new Image(); //4
         party_in_the_parlament.src = "images/party_in_the_parlament.png"
         party_in_the_parlament.onload = function() {
             let imgX = 295
@@ -324,7 +324,7 @@ function drawComputerBg() {
             ctx.fillText("Sell price: 50$/g", 460, 635)
         }
 
-        const strain_of_death = new Image();
+        const strain_of_death = new Image(); // 5
         strain_of_death.src = "images/strain_of_death.png"
         strain_of_death.onload = function() {
             let imgX = 585
@@ -337,7 +337,7 @@ function drawComputerBg() {
             ctx.fillText("Sell price: 150$/g", 755, 395)
         }
 
-        const ghostHaze = new Image();
+        const ghostHaze = new Image(); // 1
         ghostHaze.src = "images/ghosthaze.png"
         ghostHaze.onload = function() {
             let imgX = 585
@@ -350,7 +350,7 @@ function drawComputerBg() {
             ctx.fillText("Sell price: 250$/g", 755, 515)
         }
 
-        const octopussy = new Image();
+        const octopussy = new Image(); //3
         octopussy.src = "images/octopu$$y.png"
         octopussy.onload = function() {
             let imgX = 585
@@ -382,27 +382,28 @@ function drawComputerBg() {
             }
             else if (x > 285 && x < 570 && y > 420 && y < 520 && money >= 500) {
                 money -= 500
-                buyPlant(plantTypes[1]);
+                buyPlant(plantTypes[2]);
+                console.log("fff")
                 drawComputerBg()
             }
             else if (x > 285 && x < 570 && y > 540 && y < 640 && money >= 2500) {
                 money -= 2500
-                buyPlant(plantTypes[2]);
+                buyPlant(plantTypes[4]);
                 drawComputerBg()
             }
             else if (x > 590 && x < 285 && y > 300 && y < 400 && money >= 10000) {
                 money -= 10000
-                buyPlant(plantTypes[3]);
+                buyPlant(plantTypes[5]);
                 drawComputerBg()
             }
             else if (x > 590 && x < 285 && y > 420 && y < 520 && money >= 25000) {
                 money -= 25000
-                buyPlant(plantTypes[4]);
+                buyPlant(plantTypes[1]);
                 drawComputerBg()
             }
             else if (x > 590 && x < 285 && y > 540 && y < 640 && money >= 30000) {
                 money -= 30000
-                buyPlant(plantTypes[5]);
+                buyPlant(plantTypes[3]);
                 drawComputerBg()
             }
         }
