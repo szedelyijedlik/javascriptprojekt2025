@@ -11,12 +11,12 @@ let plants = [];
 let shop = new Shop();
 
 const plantTypes = [
-    ["Lemon Haze", 10, 15, "images/lemonhaze.webp"],
-    ["Ghost Haze", 10, 15, "images/ghosthaze.png"],
-    ["Albán szamár", 10, 15, "images/albanszamar.png"],
-    ["Octopu$$y", 10, 15, "images/octopu$$y.png"],
-    ["Party in the parlament", 10, 15, "images/party_in_the_parlament.png"],
-    ["Strain of death", 10, 15, "images/strain_of_death.png"]
+    ["Lemon Haze", 10, 15, "images/lemonhaze.webp", 10],
+    ["Ghost Haze", 10, 15, "images/ghosthaze.png", 30],
+    ["Albán szamár", 10, 15, "images/albanszamar.png", 50],
+    ["Octopu$$y", 10, 15, "images/octopu$$y.png", 150],
+    ["Party in the parlament", 10, 15, "images/party_in_the_parlament.png", 250],
+    ["Strain of death", 10, 15, "images/strain_of_death.png", 400]
 ];
 
 if (localStorage.getItem("plants") != null && localStorage.getItem("plants") != "") {
@@ -66,7 +66,7 @@ function buyPlant(type) {
         drawPlants();
     }
     else {
-        alert("Sikertelen művelet: Nincs több hely a polcon");
+        alert("Nincs több hely a polcon");
     }
 }
 
@@ -87,12 +87,14 @@ window.addEventListener("click", function (event) {
         const y = 255 + row * 62;
 
         if (cX + 1 > x && cX < x + 63 && cY > y && cY < y + 60) {
-            ToolTip(plants[index]);
+            if (showMenu != 1) {
+                ToolTip(plants[index]);
+            }
         }
     }
-
 });
 
+// nagy monitor nyitas
 window.addEventListener("click", function (event) {
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;
@@ -101,22 +103,38 @@ window.addEventListener("click", function (event) {
     const cX = (event.clientX - rect.left) * scaleX;
     const cY = (event.clientY - rect.top) * scaleY;
 
-    const plantsPerRow = 9;
-    for (let index = 0; index < plants.length; index++) {
-        const row = Math.floor(index / plantsPerRow);
-        const col = index % plantsPerRow;
+    const vX = 426;
+    const vY = 410;
+    // fillRect(426, 410, 304, 209);
 
-        const x = 281 + col * 64;
-        const y = 255 + row * 62;
-
-        if (cX + 1 > x && cX < x + 63 && cY > y && cY < y + 60) {
-            showMenu = true;
+    if (cX + 1 > vX && cX < vX + 304 && cY > vY && cY < vY + 209) {
+        if (showMenu == 0) {
+            showMenu = 1;
+            drawComputerBg();
         }
     }
+});
 
+// monitor bezarasa
+window.addEventListener('click', function (event) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    const x = (event.clientX - rect.left) * scaleX;
+    const y = (event.clientY - rect.top) * scaleY;
+
+    if (x < width && x > 0 && y < 200 && y > 0) {
+        if(showMenu == 1) {
+            showMenu = 0;
+            ctx.clearRect(0, 0, width, height);
+            drawPlants();
+        }
+    }
 });
 
 function ToolTip(plant) {
+    showMenu = 2;
     if (timeout != null) {
         clearTimeout(timeout);
         timeout = null;
@@ -160,11 +178,35 @@ function ToolTip(plant) {
             const y = (event.clientY - rect.top) * scaleY;
         
             if (x > 500 && x < 570 && y > 580 && y < 605) {
-                shop.Harvest(plant);
-                plants.splice(plants.indexOf(plant), 1);
+                if (plant.status >= 100) {
+                    shop.Harvest(plant);
+                    plants.splice(plants.indexOf(plant), 1);
+                    ctx.clearRect(426, 410, 304, 209);
+                    removeEventListener("click", tooltiplistener);
+                    tooltiplistener = null;
+                    showMenu = 0;
+                    clearTimeout(timeout);
+                    timeout = null;
+                    drawPlants();
+                }
+                else {
+                    ctx.clearRect(426, 410, 304, 209);
+                    removeEventListener("click", tooltiplistener);
+                    tooltiplistener = null;
+                    showMenu = 0;
+                    drawPlants();
+                }
+            }
+
+            if (x > 570 && x < 640 && y > 580 && y < 605) {
+                shop.Water(plant);
                 ctx.clearRect(426, 410, 304, 209);
+                removeEventListener("click", tooltiplistener);
+                tooltiplistener = null;
+                showMenu = 0;
+                clearTimeout(timeout);
+                timeout = null;
                 drawPlants();
-                console.log("Harvested plant");
             }
         });
     };
@@ -173,25 +215,8 @@ function ToolTip(plant) {
         ctx.clearRect(426, 410, 304, 209);
         removeEventListener("click", tooltiplistener);
         tooltiplistener = null;
+        showMenu = 0;
     }, 5000);
-}
-
-function alert(msg) {
-    let x = width / 2;
-    let y = 100;
-
-    ctx.clearRect(0, 0, width, 150);
-    ctx.fillStyle = "darkred";
-    ctx.roundRect(x - msg.length * 4, y, msg.length * 8, 40, 5);
-    ctx.fill();
-    ctx.fillStyle = "white";
-    ctx.font = "15px Arial";
-    ctx.textAlign = "center";
-    ctx.fillText(msg, x, y + 25);
-
-    setTimeout(() => {
-        ctx.clearRect(0, 0, width, 150);
-    }, 2000);
 }
 
 setInterval(() => {
@@ -238,7 +263,6 @@ function drawComputerBg() {
         
         ctx.font = "15px Arial";
         ctx.fillText(`Money: ${money}$`, 330, 260);
-        ctx.fillText(`Weed quantity: ${quantity}g`, 810, 260);
         
         ctx.strokeStyle = "white";
         ctx.moveTo(275, 275);
@@ -321,9 +345,9 @@ function drawComputerBg() {
             ctx.drawImage(ghostHaze, imgX, imgY, 80, 80)
             ctx.fillStyle = 'black'
             ctx.fillText("Ghost Haze", 755, 440)
-            ctx.fillText("Price: ", 755, 465)
-            ctx.fillText("Quantity you get: ", 755, 490)
-            ctx.fillText("Sell price: ", 755, 515)
+            ctx.fillText("Price: 25000$", 755, 465)
+            ctx.fillText("Quantity you get: 120-130g", 755, 490)
+            ctx.fillText("Sell price: 250$/g", 755, 515)
         }
 
         const octopussy = new Image();
@@ -334,24 +358,13 @@ function drawComputerBg() {
             ctx.drawImage(octopussy, imgX, imgY, 80, 80)
             ctx.fillStyle = 'black'
             ctx.fillText("Octopu$$y", 755, 560)
-            ctx.fillText("Price: ", 755, 585)
-            ctx.fillText("Quantity you get: ", 755, 610)
-            ctx.fillText("Sell price: ", 755, 635)
+            ctx.fillText("Price: 30000$", 755, 585)
+            ctx.fillText("Quantity you get: 140-150g", 755, 610)
+            ctx.fillText("Sell price: 400$/g", 755, 635)
         }
-        
-        ctx.beginPath()
-        ctx.fillStyle = 'green'
-        ctx.roundRect(500, 648, 160, 20, 5)
-        ctx.fill()
-        
-        ctx.fillStyle = 'white'
-        ctx.fillText("Buy selected products", 580, 663)
-
     };
-
 }
 
-function closeMenu() {
     window.addEventListener('click', function (event) {
         const rect = canvas.getBoundingClientRect();
         const scaleX = canvas.width / rect.width;
@@ -360,16 +373,42 @@ function closeMenu() {
         const x = (event.clientX - rect.left) * scaleX;
         const y = (event.clientY - rect.top) * scaleY;
 
-        // if (x < 245 && x > 245 + 428 && y < 200 && y > 200 + 311) {
-            
-        // }
+        if (showMenu == 1) {
+            if (x > 285 && x < 570 && y > 300 && y < 400 && money >= 100) {
+                money -= 100;
+                console.log('done');
+                buyPlant(plantTypes[0]);
+                drawComputerBg();
+            }
+            else if (x > 285 && x < 570 && y > 420 && y < 520 && money >= 500) {
+                money -= 500
+                buyPlant(plantTypes[1]);
+                drawComputerBg()
+            }
+            else if (x > 285 && x < 570 && y > 540 && y < 640 && money >= 2500) {
+                money -= 2500
+                buyPlant(plantTypes[2]);
+                drawComputerBg()
+            }
+            else if (x > 590 && x < 285 && y > 300 && y < 400 && money >= 10000) {
+                money -= 10000
+                buyPlant(plantTypes[3]);
+                drawComputerBg()
+            }
+            else if (x > 590 && x < 285 && y > 420 && y < 520 && money >= 25000) {
+                money -= 25000
+                buyPlant(plantTypes[4]);
+                drawComputerBg()
+            }
+            else if (x > 590 && x < 285 && y > 540 && y < 640 && money >= 30000) {
+                money -= 30000
+                buyPlant(plantTypes[5]);
+                drawComputerBg()
+            }
+        }
     })
-}
 
-function Computer() {
-    drawComputerBg();
-}
-
+let showMenu = 0;
 let timeout = null;
 let tooltiplistener = null;
 drawPlants();
